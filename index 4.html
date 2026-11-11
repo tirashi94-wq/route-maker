@@ -1,0 +1,704 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>巡回ルートメーカー</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="巡回ルート">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#F1F3EF" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0F1513" media="(prefers-color-scheme: dark)">
+<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAYAAAA9zQYyAAAFn0lEQVR4nO2dPbLTMBRG6bMP9sE+GJbA0NFRsAAaqCkpX0tJ/SoWQEFDy7CEMDfzPITEP5KlK1nfPXfmNPCS2PGZL/qz/Oz0+tUZQIVnvQ8AoCYIDVIgNEiB0CAFQoMUCA1SIDRIgdAgBUKDFAgNUiA0SIHQIAVCgxQIDVIgNEiB0CAFQoMUCA1SIDRIgdAgBUKDFAgNUiA0SIHQIAVCgxQIDVIgNEiB0CAFQoMUCA1SIDRIgdAgBUKDFAgNUiA0SIHQIAVCgxQIDVIgNEiB0JV4+fnThYfvjxd+/fl9Xir7v+nvptf1Pn4VEHonLz68P3/89vX8+PPHori5Ze9l72nv3fv8RgWhM3j+7s1FuLX0rVX2GfZZ9pm9z3skEDoBS8yaSZxb9tmkdhoIvUJvkW8LsbdB6BmmpsVRi6bIMgh9g404tGgjl5YdI6Mj9yD0FTaMNlrZMff+3o4EQj81MUZI5aWyY6cJgtAXrJM1ssxT2TnQYQwutLVB1Sp6uzqs0IoyTxVZ6pBC20+zekVtfoQTevQOYGpF7SiGEzqCzFPZufb+vhHakRHHmUsr2jh1GKGVO4FbFamTGELoKO3mpYrUng4h9JEXGrUq+w56XweErkCEIbrUijCUJy/0kdYz9y77LnpfD4QugHS+L/WUlhaadL4v9ZSWFdp69b1q2p5gLg3t36btDnqV8oiHrNCtRzZsaOztw5csWexv7TWthxSVRzxkhW4piaVtSerZa1smtvKUuKTQLTuDNWfhWs5mqnYOJYVu1dzwmFJuJbVqs0NS6BajG57rI1pIrTraISm0d7VYwdaiTd37OnkgJ7R3urVa6NNiQZXiKjyEziwbZmt1LvZZnoXQA+D9U91yUsJ7ckhx8T9CH1wAtfPxRk5oz3Znj59ozyaU4gSLnNCe1WMywnuSqPf1qg1CD3DxFc/JC4Qe4OIrnpMXCD3AxVc8Jy8QeoCLr3hOXiB0RtEpPD5yQjNsl14M2w2A2kSE2vl4g9CZxdT3sZETmsVJ6cXipAFg+Wh6IfQgeBcL/I+LpNDcgrVd3II1ENwku13cJDsQbGOwXWxjMBhsNLNcihMq8kKzFdhyqTY3pIVms8blYrPGQWE73ftSHd0IITQbnt+XamcwhNAnUvq/Uk/nEEKT0v9KPZ1DCH3isW6XUh7ZCCc0D97kwZty8Gjk/tcAoSvDw+v1CSX0qfGUeO9SnuJG6CeitKcjtZtDC30KMpQXYYgOoa9Q7iRG6gQitLjUkWUOL/Tpqfmh0Ka2c4jazEDoG0bvKEbtAM6B0FeMOE4dbZx5C4S+wdqgI6S1HWP09vIcCD1D63v8cqv0HkZlEHqFI66ljrCmuQSEXuGIEzCMZKyD0BscKaVJ520QeoMjpTTpvA1CJ3CElCad00DoBI6Q0qRzGgidSM+UJp3TQehEeqY06ZwOQmfQI6VJ5zwQOoMeKU0654HQmbScEmfhUT4InUnLXU1Zr5EPQu+gxU5MUXY6qg1C76BFSpPO+0DonXimNOm8H4TeiWdKk877QegCPFKadC4DoQvwSGnSuQyELqRmSpPO5SB0ITVTmnQuB6ErUCOlSec6IHQlSrY+iLjtrRcIXQl7Iuzestf2Pn4VELoie1KadK4LQldkT0qTznVB6MrkpDTpXB+ErkxOSpPO9UFoB1JSmnT2AaEdSElp0tkHhHZiLaVJZz8Q2om1lCad/UBoR+ZSmnT2BaEdmdv2gG0JfEFoZ643p2HTGH8Q2pnrlCad/UHoBlgyk85tQOgGWDKTzm1AaJACoUEKhAYpEBqkQGiQAqFBCoQGKRAapEBokAKhQQqEBikQGqRAaJACoUEKhAYpEBqkQGiQAqFBCoQGKRAapEBokAKhQQqEBikQGqRAaJACoUEKhAYpEBqkQGiQAqFBCoQGKRAapPgLTNhtUO6ADpgAAAAASUVORK5CYII=">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<style>
+/* Layout: 1カラムの作業画面。入力 → 結果(地図・順番リスト・Googleマップ連携)の順に縦に並べる */
+:root {
+  --bg: #F1F3EF;
+  --surface: #FFFFFF;
+  --ink: #18221F;
+  --muted: #5C6B66;
+  --line: #D5DBD6;
+  --accent: #0B6E5E;
+  --accent-ink: #FFFFFF;
+  --start: #C2410C;
+  --warn: #8A5200;
+  --warn-bg: #FBF1DC;
+  --font: "Noto Sans JP", system-ui, -apple-system, "Hiragino Sans", "Yu Gothic", "Meiryo", sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0F1513; --surface: #172019; --ink: #E6EEEA; --muted: #92A39C; --line: #2A3731;
+    --accent: #3CC4A8; --accent-ink: #04251F; --start: #FB923C; --warn: #F2B857; --warn-bg: #2B2112;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0F1513; --surface: #172019; --ink: #E6EEEA; --muted: #92A39C; --line: #2A3731;
+  --accent: #3CC4A8; --accent-ink: #04251F; --start: #FB923C; --warn: #F2B857; --warn-bg: #2B2112;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font: 15px/1.6 var(--font);
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-top: max(20px, env(safe-area-inset-top, 0px));
+  padding-bottom: max(48px, env(safe-area-inset-bottom, 0px));
+}
+.wrap { max-width: 720px; margin: 0 auto; display: grid; gap: 16px; }
+h1 { margin: 0; font-size: 22px; line-height: 1.3; text-wrap: balance; }
+.sub { margin: 4px 0 0; color: var(--muted); }
+h2 { margin: 0; font-size: 16px; }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px; display: grid; gap: 12px; min-width: 0; }
+label { font-weight: 700; font-size: 14px; display: block; margin-bottom: 4px; }
+input[type="text"], textarea, select {
+  width: 100%; font: inherit; font-size: 16px; color: var(--ink); background: var(--bg);
+  border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px;
+}
+textarea { resize: vertical; min-height: 9em; line-height: 1.5; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.row { display: flex; gap: 8px; align-items: stretch; }
+.row > input { flex: 1; min-width: 0; }
+.opts { display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center; }
+.opts label { margin: 0; font-weight: 500; display: flex; gap: 8px; align-items: center; }
+.opts select { width: auto; padding: 6px 10px; }
+.actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.btn {
+  font: inherit; font-weight: 700; cursor: pointer; text-decoration: none; text-align: center;
+  background: var(--accent); color: var(--accent-ink); border: 1px solid var(--accent);
+  border-radius: 8px; padding: 10px 16px; display: inline-block; line-height: 1.4;
+}
+.btn.ghost { background: transparent; color: var(--ink); border-color: var(--line); font-weight: 500; }
+.btn.small { padding: 4px 10px; font-size: 13px; }
+.btn:disabled { opacity: .5; cursor: progress; }
+.count { color: var(--muted); font-size: 13px; margin-left: auto; font-variant-numeric: tabular-nums; }
+.status { margin: 0; font-size: 14px; color: var(--muted); min-height: 1.4em; }
+.status.warn { color: var(--warn); }
+.summary { display: flex; flex-wrap: wrap; gap: 4px 20px; color: var(--muted); font-size: 14px; font-variant-numeric: tabular-nums; }
+.summary b { color: var(--ink); font-size: 18px; }
+.mapbox { border: 1px solid var(--line); border-radius: 8px; background: var(--bg); overflow: hidden; }
+.mapbox svg { display: block; width: 100%; height: auto; }
+#lmap { height: min(62vh, 440px); min-height: 300px; width: 100%; }
+.pin span {
+  display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%;
+  background: var(--accent); color: var(--accent-ink); border: 2px solid #fff;
+  font: 700 13px/1 var(--font); box-shadow: 0 1px 4px rgba(0, 0, 0, .45);
+}
+.pin.start span { background: var(--start); color: #fff; border-radius: 8px; }
+.leaflet-popup-content { font: 13px/1.5 var(--font); color: #18221F; margin: 10px 12px; }
+.leaflet-popup-content a { color: #0B6E5E; font-weight: 700; }
+.addr.tap { cursor: pointer; }
+.note { margin: 0; font-size: 12px; color: var(--muted); }
+ol.stops { list-style: none; margin: 0; padding: 0; display: grid; }
+ol.stops li { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 10px 0; border-top: 1px solid var(--line); }
+ol.stops li:first-child { border-top: 0; }
+.badge { width: 28px; height: 28px; border-radius: 50%; background: var(--accent); color: var(--accent-ink); font-weight: 700; font-size: 13px; display: grid; place-items: center; font-variant-numeric: tabular-nums; }
+.badge.start { background: var(--start); color: #fff; border-radius: 6px; }
+.addr { overflow-wrap: anywhere; }
+.meta { font-size: 12px; color: var(--muted); overflow-wrap: anywhere; }
+.tools { display: flex; gap: 4px; align-items: center; }
+.tools button { font: inherit; width: 32px; height: 32px; border: 1px solid var(--line); background: transparent; color: var(--ink); border-radius: 6px; cursor: pointer; }
+.tools a { font-size: 13px; color: var(--accent); padding: 0 6px; white-space: nowrap; }
+.links { display: grid; gap: 8px; }
+.failed { background: var(--warn-bg); color: var(--warn); border-radius: 8px; padding: 12px; font-size: 14px; }
+.failed ul { margin: 6px 0 0; padding-left: 1.2em; overflow-wrap: anywhere; }
+.priv { font-size: 12px; color: var(--muted); margin: 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>巡回ルートメーカー</h1>
+    <p class="sub">訪問先の住所を貼り付けると、近い順に並べ替えて、Googleマップで開けます。</p>
+  </header>
+
+  <section class="panel" aria-label="入力">
+    <div>
+      <label for="start">出発地（任意）</label>
+      <div class="row">
+        <input id="start" type="text" placeholder="例: 東京都千代田区丸の内1-9-1" autocomplete="off">
+        <button id="loc" class="btn ghost" type="button">現在地</button>
+      </div>
+    </div>
+    <div>
+      <label for="addrs">訪問先（電話番号やメモが混ざっていてもOK）</label>
+      <textarea id="addrs" placeholder="東京都港区芝公園4-2-8&#10;東京都台東区浅草2-3-1&#10;東京都新宿区西新宿2-8-1"></textarea>
+    </div>
+    <div class="opts">
+      <label><input id="loop" type="checkbox"> 最後に出発地へ戻る</label>
+      <label>移動手段
+        <select id="mode">
+          <option value="driving">車</option>
+          <option value="walking">徒歩</option>
+          <option value="bicycling">自転車</option>
+        </select>
+      </label>
+    </div>
+    <div class="actions">
+      <button id="go" class="btn" type="button">ルートを作る</button>
+      <button id="sample" class="btn ghost" type="button">サンプルを入れる</button>
+      <span id="count" class="count"></span>
+    </div>
+    <p id="status" class="status" role="status"></p>
+  </section>
+
+  <section id="result" class="panel" hidden aria-label="結果">
+    <h2>回る順番</h2>
+    <div id="summary" class="summary"></div>
+    <div class="mapbox" id="map" aria-label="訪問先の位置関係図"></div>
+    <p class="note">地図の番号は、下のリストの番号と同じです。ピンをタップすると、その場所だけをGoogleマップで開くリンクが出ます。リストの住所をタップすると、地図がそのピンに移動します。</p>
+    <ol id="list" class="stops"></ol>
+    <div id="links" class="links"></div>
+    <div class="actions"><button id="copy" class="btn ghost" type="button">順番をコピー</button><span id="copied" class="note"></span></div>
+    <div id="failed" class="failed" hidden></div>
+  </section>
+
+  <p class="priv">住所は国土地理院の住所検索（見つからない場合はOpenStreetMap）に送って座標を調べます。入力内容はこの端末のブラウザにだけ保存されます。距離は直線距離で、実際の道のりより短く出ます。<br>版: 11/11-C（地図ピン・アプリ直接起動）</p>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var store = {
+    get: function (k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+    set: function (k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  };
+  var sleep = function (ms) { return new Promise(function (r) { setTimeout(r, ms); }); };
+
+  var state = { start: null, ordered: [], failed: [], loop: false, mode: 'driving' };
+  var geoStart = null;
+  var netErr = 0;
+
+  /* ---------- 保存と復元 ---------- */
+  var geoCache = {};
+  try { geoCache = JSON.parse(store.get('rm_geo') || '{}'); } catch (e) { geoCache = {}; }
+  $('addrs').value = store.get('rm_addrs') || '';
+  $('start').value = store.get('rm_start') || '';
+  $('loop').checked = store.get('rm_loop') === '1';
+  $('mode').value = store.get('rm_mode') || 'driving';
+
+  /* 貼り付けた文章から「住所の行」だけを取り出す。
+     電話番号・品物・時間などのメモ行は、直前の住所のメモとして付ける。 */
+  var WARDS = '千代田区|中央区|港区|新宿区|文京区|台東区|墨田区|江東区|品川区|目黒区|大田区|世田谷区|渋谷区|中野区|杉並区|豊島区|北区|荒川区|板橋区|練馬区|足立区|葛飾区|江戸川区';
+  var wardRe = new RegExp('^(' + WARDS + ')');
+  var PREF = '北海道|東京都|(?:京都|大阪)府|[^\\d都道府県\\s]{2,3}県';
+  var prefRe = new RegExp('^(' + PREF + ')');
+  var cityRe = new RegExp('^((?:' + PREF + ')?[^\\d]+?[市区郡])');
+  function norm(s) {
+    return s.replace(/[０-９Ａ-Ｚａ-ｚ]/g, function (c) { return String.fromCharCode(c.charCodeAt(0) - 0xFEE0); })
+      .replace(/(\d)\s*[‐‑–—−－ー―-]\s*(?=\d)/g, '$1-')
+      .replace(/\s+/g, ' ').trim();
+  }
+  function isPhone(raw) {
+    var t = norm(raw);
+    if (!/^\+?[\d\s\-().]+$/.test(t)) return false;
+    var d = t.replace(/\D/g, '');
+    return d.length >= 10 && d.length <= 11 && d.charAt(0) === '0';
+  }
+  function isAddr(raw) {
+    var n = norm(raw);
+    if (isPhone(raw) || /\d:\d/.test(n)) return false;
+    return /\d+-\d+/.test(n) || /丁目|番地/.test(n);
+  }
+  function parseInput(text, startPref) {
+    var out = [], seen = {}, last = null, lastArea = '';
+    text.split(/\r?\n/).forEach(function (line) {
+      var raw = line.trim();
+      if (!raw) return;
+      if (!isAddr(raw)) {
+        if (last) last.note = last.note ? last.note + ' / ' + raw : raw;
+        return;
+      }
+      var n = norm(raw).replace(/^〒?\s*\d{3}-?\d{4}\s*/, '');
+      var m = n.match(/^(.*?\d+(?:-\d+){0,2})/);
+      var core = (m ? m[1] : n).replace(/\s+/g, '');
+      var cm = core.match(cityRe), q;
+      if (cm) {
+        var area = cm[1];
+        if (!prefRe.test(area)) {
+          if (wardRe.test(area)) area = '東京都' + area;
+          else if (startPref) area = startPref + area;
+        }
+        lastArea = area;
+        q = prefRe.test(core) ? core : (core.indexOf(cm[1]) === 0 ? area + core.slice(cm[1].length) : core);
+      } else {
+        q = lastArea ? lastArea + core : core;
+      }
+      if (seen[raw]) { last = null; return; }
+      seen[raw] = 1;
+      last = { input: raw, query: q, note: '' };
+      out.push(last);
+    });
+    return out;
+  }
+  function updateCount() {
+    var n = parseInput($('addrs').value, '').length;
+    $('count').textContent = n ? n + '件' : '';
+  }
+  $('addrs').addEventListener('input', function () { store.set('rm_addrs', $('addrs').value); updateCount(); });
+  $('start').addEventListener('input', function () {
+    store.set('rm_start', $('start').value);
+    if ($('start').value.trim() !== '現在地') geoStart = null;
+  });
+  $('loop').addEventListener('change', function () { store.set('rm_loop', $('loop').checked ? '1' : '0'); });
+  $('mode').addEventListener('change', function () {
+    store.set('rm_mode', $('mode').value);
+    if (state.ordered.length) { state.mode = $('mode').value; renderLinks(); }
+  });
+  updateCount();
+
+  function setStatus(msg, kind) {
+    var el = $('status');
+    el.textContent = msg || '';
+    el.className = 'status' + (kind === 'warn' ? ' warn' : '');
+  }
+
+  /* ---------- 住所 → 座標 ---------- */
+  function viaGSI(q) {
+    return fetch('https://msearch.gsi.go.jp/address-search/AddressSearch?q=' + encodeURIComponent(q))
+      .then(function (res) { return res.ok ? res.json() : null; })
+      .then(function (j) {
+        if (!Array.isArray(j) || !j.length) return null;
+        var f = j[0], c = f.geometry && f.geometry.coordinates;
+        if (!c) return null;
+        return { lat: c[1], lon: c[0], label: (f.properties && f.properties.title) || '' };
+      })
+      .catch(function () { netErr++; return null; });
+  }
+  function viaOSM(q) {
+    return fetch('https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&countrycodes=jp&accept-language=ja&q=' + encodeURIComponent(q))
+      .then(function (res) { return res.ok ? res.json() : null; })
+      .then(function (j) {
+        if (!Array.isArray(j) || !j.length) return null;
+        return { lat: parseFloat(j[0].lat), lon: parseFloat(j[0].lon), label: j[0].display_name || '' };
+      })
+      .catch(function () { netErr++; return null; });
+  }
+  async function geocodeOne(q) {
+    if (geoCache[q]) return geoCache[q];
+    var r = await viaGSI(q);
+    if (!r && netErr === 0) { await sleep(1100); r = await viaOSM(q); }
+    if (r) {
+      geoCache[q] = r;
+      store.set('rm_geo', JSON.stringify(geoCache));
+    }
+    return r;
+  }
+  /* 見つからなければ末尾の番号を1つずつ外して、近くの位置で代用する */
+  async function geocode(q) {
+    var t = q, r = await geocodeOne(t);
+    if (r) return r;
+    while (netErr === 0 && /-\d+$/.test(t) && /\d-\d+$/.test(t)) {
+      t = t.replace(/-\d+$/, '');
+      r = await geocodeOne(t);
+      if (r) return { lat: r.lat, lon: r.lon, label: r.label, approx: true };
+    }
+    return null;
+  }
+
+  /* ---------- ルート計算(近い順 + 2-opt) ---------- */
+  function hav(a, b) {
+    var R = 6371, t = Math.PI / 180;
+    var dLat = (b.lat - a.lat) * t, dLon = (b.lon - a.lon) * t;
+    var x = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(a.lat * t) * Math.cos(b.lat * t) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    return 2 * R * Math.asin(Math.sqrt(x));
+  }
+  function solve(points, hasStart, loop) {
+    var n = points.length, i, j;
+    if (n <= 2) return points.map(function (_, k) { return k; });
+    var D = points.map(function (a) { return points.map(function (b) { return hav(a, b); }); });
+    function len(o) {
+      var s = 0, k;
+      for (k = 1; k < o.length; k++) s += D[o[k - 1]][o[k]];
+      if (loop) s += D[o[o.length - 1]][o[0]];
+      return s;
+    }
+    function nn(s) {
+      var o = [s], used = {}, k, last, best, bd;
+      used[s] = true;
+      while (o.length < n) {
+        last = o[o.length - 1]; best = -1; bd = Infinity;
+        for (k = 0; k < n; k++) {
+          if (!used[k] && D[last][k] < bd) { bd = D[last][k]; best = k; }
+        }
+        o.push(best); used[best] = true;
+      }
+      return o;
+    }
+    var order, bl = Infinity;
+    if (hasStart) { order = nn(0); }
+    else {
+      for (i = 0; i < n; i++) { var o2 = nn(i), l2 = len(o2); if (l2 < bl) { bl = l2; order = o2; } }
+    }
+    var lo = hasStart ? 1 : 0, cur = len(order), improved = true, guard = 0;
+    while (improved && guard++ < 50) {
+      improved = false;
+      for (i = lo; i < n - 1; i++) {
+        for (j = i + 1; j < n; j++) {
+          var cand = order.slice(0, i).concat(order.slice(i, j + 1).reverse(), order.slice(j + 1));
+          var l = len(cand);
+          if (l < cur - 1e-9) { order = cand; cur = l; improved = true; }
+        }
+      }
+    }
+    return order;
+  }
+
+  /* ---------- 実行 ---------- */
+  async function build() {
+    var startText = $('start').value.trim();
+    var loop = $('loop').checked;
+    netErr = 0;
+    var startPref = '';
+    var probe = parseInput($('addrs').value, '');
+    if (!probe.length) { setStatus('住所の行が見つかりません。「区・市」や「2-26-3」のような番地を含めて入力してください。', 'warn'); return; }
+    if (probe.length > 100) { setStatus('一度に処理できるのは100件までです。分けて実行してください。', 'warn'); return; }
+    $('go').disabled = true;
+    var done = 0;
+    var stops = [], failed = [], start = null;
+
+    if (startText) {
+      setStatus('出発地を検索中…');
+      if (startText === '現在地' && geoStart) {
+        start = { input: '現在地', lat: geoStart.lat, lon: geoStart.lon, label: '現在地' };
+      } else {
+        var s = await geocode(norm(startText));
+        if (s) {
+          start = { input: startText, lat: s.lat, lon: s.lon, label: s.label };
+          var pm = norm(startText).match(prefRe) || (s.label || '').match(prefRe);
+          if (pm) startPref = pm[1];
+        } else failed.push('出発地: ' + startText);
+      }
+    }
+    var lines = parseInput($('addrs').value, startPref);
+    var total = lines.length;
+    for (var i = 0; i < lines.length; i++) {
+      setStatus(done + ' / ' + total + ' 件 住所を検索中…');
+      var r = await geocode(lines[i].query);
+      if (r) stops.push({ input: lines[i].input, note: lines[i].note, approx: !!r.approx, lat: r.lat, lon: r.lon, label: r.label });
+      else failed.push(lines[i].input);
+      done++;
+      await sleep(80);
+    }
+
+    if (!stops.length) {
+      $('go').disabled = false;
+      if (netErr > 0) {
+        setStatus('インターネットに接続できず、住所を検索できませんでした。この画面ではなく、SafariやChromeなどのブラウザでファイルを開いてください。', 'warn');
+        $('result').hidden = true;
+        return;
+      }
+      setStatus('座標が見つかった住所がありません。都道府県や市区から書くと見つかりやすくなります。', 'warn');
+      showFailed(failed);
+      $('result').hidden = false;
+      $('list').innerHTML = ''; $('links').innerHTML = ''; $('summary').innerHTML = ''; $('map').innerHTML = '';
+      return;
+    }
+
+    var pts = (start ? [start] : []).concat(stops);
+    var order = solve(pts, !!start, loop);
+    var ordered = order.filter(function (k) { return !(start && k === 0); }).map(function (k) { return pts[k]; });
+
+    state = { start: start, ordered: ordered, failed: failed, loop: loop, mode: $('mode').value };
+    $('go').disabled = false;
+    setStatus(failed.length ? ordered.length + '件を並べ替えました。' + failed.length + '件は場所を特定できませんでした。' : ordered.length + '件を並べ替えました。', failed.length ? 'warn' : '');
+    render();
+    $('result').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  /* ---------- 表示 ---------- */
+  function fmtKm(km) { return km < 10 ? km.toFixed(1) : String(Math.round(km)); }
+  function chain() {
+    var c = (state.start ? [state.start] : []).concat(state.ordered);
+    if (state.loop && c.length > 1) c.push(c[0]);
+    return c;
+  }
+  function render() {
+    $('result').hidden = false;
+    renderSummary();
+    renderMap();
+    renderList();
+    renderLinks();
+    showFailed(state.failed);
+  }
+  function renderSummary() {
+    var c = chain(), sum = 0, i;
+    for (i = 1; i < c.length; i++) sum += hav(c[i - 1], c[i]);
+    $('summary').innerHTML = '<span><b>' + state.ordered.length + '</b> 件</span>' +
+      (c.length > 1 ? '<span>直線距離の合計 <b>' + fmtKm(sum) + '</b> km</span>' : '');
+  }
+  function renderList() {
+    var ol = $('list');
+    ol.innerHTML = '';
+    var prev = state.start || null;
+    if (state.start) {
+      var li0 = document.createElement('li');
+      li0.innerHTML = '<span class="badge start" aria-hidden="true">出</span><div><div class="addr"></div><div class="meta">出発地</div></div><span></span>';
+      li0.querySelector('.addr').textContent = state.start.input;
+      ol.appendChild(li0);
+    }
+    state.ordered.forEach(function (p, idx) {
+      var li = document.createElement('li');
+      var badge = document.createElement('span');
+      badge.className = 'badge'; badge.textContent = String(idx + 1);
+      var body = document.createElement('div');
+      var a = document.createElement('div'); a.className = 'addr tap'; a.textContent = p.input;
+      a.onclick = function () { focusPin(idx + (state.start ? 1 : 0)); };
+      var m = document.createElement('div'); m.className = 'meta';
+      var leg = prev ? '前から約 ' + fmtKm(hav(prev, p)) + ' km ・ ' : '';
+      m.textContent = leg + '検索結果: ' + (p.label || '—') + (p.approx ? '（番地までは特定できず、付近の位置です）' : '');
+      body.appendChild(a); body.appendChild(m);
+      if (p.note) {
+        var nt = document.createElement('div'); nt.className = 'meta'; nt.textContent = 'メモ: ' + p.note;
+        body.appendChild(nt);
+      }
+      var tools = document.createElement('div'); tools.className = 'tools';
+      var up = document.createElement('button'); up.type = 'button'; up.textContent = '▲'; up.setAttribute('aria-label', (idx + 1) + '番を上へ');
+      var dn = document.createElement('button'); dn.type = 'button'; dn.textContent = '▼'; dn.setAttribute('aria-label', (idx + 1) + '番を下へ');
+      var rm = document.createElement('button'); rm.type = 'button'; rm.textContent = '✕'; rm.setAttribute('aria-label', (idx + 1) + '番を外す');
+      up.disabled = idx === 0; dn.disabled = idx === state.ordered.length - 1;
+      up.onclick = function () { swap(idx, idx - 1); };
+      dn.onclick = function () { swap(idx, idx + 1); };
+      rm.onclick = function () { state.ordered.splice(idx, 1); render(); if (!state.ordered.length) $('result').hidden = true; };
+      var pin = document.createElement('a');
+      pin.href = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(p.lat.toFixed(6) + ',' + p.lon.toFixed(6));
+      pin.setAttribute('data-app', pinApp(p));
+      pin.target = '_blank'; pin.rel = 'noopener'; pin.textContent = '地図';
+      tools.appendChild(pin); tools.appendChild(up); tools.appendChild(dn); tools.appendChild(rm);
+      li.appendChild(badge); li.appendChild(body); li.appendChild(tools);
+      ol.appendChild(li);
+      prev = p;
+    });
+  }
+  function swap(a, b) {
+    var t = state.ordered[a]; state.ordered[a] = state.ordered[b]; state.ordered[b] = t;
+    render();
+  }
+
+  function pinApp(p) {
+    return 'comgooglemaps://?q=' + p.lat.toFixed(6) + ',' + p.lon.toFixed(6) + '&zoom=16';
+  }
+  function gmLinks(pts, mode) {
+    var f = function (p) { return p.lat.toFixed(6) + ',' + p.lon.toFixed(6); };
+    var out = [], CH = 10, s = 0;
+    if (pts.length === 1) {
+      return [{ href: 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(f(pts[0])), app: pinApp(pts[0]), from: 0, to: 0 }];
+    }
+    while (s < pts.length - 1) {
+      var seg = pts.slice(s, s + CH);
+      var o = seg[0], d = seg[seg.length - 1];
+      var w = seg.slice(1, -1).map(f).join('|');
+      var href = 'https://www.google.com/maps/dir/?api=1&origin=' + encodeURIComponent(f(o)) +
+        '&destination=' + encodeURIComponent(f(d)) + '&travelmode=' + mode;
+      if (w) href += '&waypoints=' + encodeURIComponent(w);
+      var app = 'comgooglemaps://?saddr=' + f(o) + '&daddr=' + seg.slice(1).map(f).join('+to:') +
+        '&directionsmode=' + mode;
+      out.push({ href: href, app: app, from: s, to: s + seg.length - 1 });
+      s += CH - 1;
+    }
+    return out;
+  }
+  function renderLinks() {
+    var box = $('links');
+    box.innerHTML = '';
+    var c = chain();
+    if (!c.length) return;
+    var hasStart = !!state.start;
+    var n = state.ordered.length;
+    function name(i) {
+      if (hasStart && i === 0) return '出発地';
+      if (state.loop && i === c.length - 1) return '出発地';
+      return (hasStart ? i : i + 1) + '件目';
+    }
+    var links = gmLinks(c, state.mode);
+    links.forEach(function (L, k) {
+      var a = document.createElement('a');
+      a.className = 'btn'; a.target = '_blank'; a.rel = 'noopener'; a.href = L.href;
+      a.setAttribute('data-app', L.app);
+      if (links.length === 1) a.textContent = 'Googleマップでルートを開く';
+      else a.textContent = 'Googleマップで開く 区間' + (k + 1) + '（' + name(L.from) + ' → ' + name(L.to) + '）';
+      box.appendChild(a);
+    });
+    if (links.length > 1) {
+      var p = document.createElement('p'); p.className = 'note';
+      p.textContent = 'Googleマップは1回に立ち寄れる地点数が限られるため、区間に分けています。順番どおりに開いてください。';
+      box.appendChild(p);
+    }
+    $('copy').disabled = !n;
+  }
+  function showFailed(list) {
+    var el = $('failed');
+    if (!list.length) { el.hidden = true; el.innerHTML = ''; return; }
+    el.hidden = false;
+    el.innerHTML = '';
+    var t = document.createElement('div');
+    t.textContent = '場所を特定できなかった住所（ルートには入っていません）。都道府県から書き直して、もう一度「ルートを作る」を押してください。';
+    var ul = document.createElement('ul');
+    list.forEach(function (s) { var li = document.createElement('li'); li.textContent = s; ul.appendChild(li); });
+    el.appendChild(t); el.appendChild(ul);
+  }
+
+  /* ---------- 簡易マップ(SVG) ---------- */
+  var lmap = null, layer = null, pinMarkers = [];
+  function pinIcon(label, isStart) {
+    return L.divIcon({
+      className: 'pin' + (isStart ? ' start' : ''),
+      html: '<span>' + label + '</span>',
+      iconSize: [30, 30], iconAnchor: [15, 15], popupAnchor: [0, -16]
+    });
+  }
+  function popupFor(p, title) {
+    var d = document.createElement('div');
+    var b = document.createElement('b'); b.textContent = title + ' ' + p.input; d.appendChild(b);
+    if (p.note) { var n = document.createElement('div'); n.textContent = p.note; d.appendChild(n); }
+    var w = document.createElement('div');
+    var a = document.createElement('a');
+    a.href = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(p.lat.toFixed(6) + ',' + p.lon.toFixed(6));
+    a.setAttribute('data-app', pinApp(p));
+    a.target = '_blank'; a.rel = 'noopener'; a.textContent = 'Googleマップで開く';
+    w.appendChild(a); d.appendChild(w);
+    return d;
+  }
+  function renderMap() {
+    if (!window.L) { renderMapSvg(); return; }
+    var c = chain();
+    var box = $('map');
+    if (!lmap) {
+      box.innerHTML = '';
+      var div = document.createElement('div'); div.id = 'lmap'; box.appendChild(div);
+      lmap = L.map(div);
+      L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png', {
+        maxZoom: 18,
+        attribution: '<a href="https://maps.gsi.go.jp/development/ichiran.html" target="_blank" rel="noopener">地理院タイル</a>'
+      }).addTo(lmap);
+      layer = L.layerGroup().addTo(lmap);
+    }
+    layer.clearLayers();
+    pinMarkers = [];
+    if (!c.length) return;
+    var hasStart = !!state.start;
+    var drawCount = state.loop && c.length > 1 ? c.length - 1 : c.length;
+    var latlngs = c.map(function (p) { return [p.lat, p.lon]; });
+    var accent = (getComputedStyle(document.documentElement).getPropertyValue('--accent') || '').trim() || '#0B6E5E';
+    if (latlngs.length > 1) L.polyline(latlngs, { color: accent, weight: 3, opacity: 0.75, dashArray: '6 6' }).addTo(layer);
+    for (var i = 0; i < drawCount; i++) {
+      var isStart = hasStart && i === 0;
+      var label = isStart ? '出' : String(hasStart ? i : i + 1);
+      var mk = L.marker(latlngs[i], { icon: pinIcon(label, isStart) })
+        .bindPopup(popupFor(c[i], isStart ? '出発地' : label + '.'));
+      mk.addTo(layer);
+      pinMarkers.push(mk);
+    }
+    lmap.invalidateSize();
+    if (latlngs.length === 1) lmap.setView(latlngs[0], 15);
+    else lmap.fitBounds(L.latLngBounds(latlngs), { padding: [30, 30], maxZoom: 16 });
+  }
+  function focusPin(i) {
+    if (!lmap || !pinMarkers[i]) return;
+    $('map').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    lmap.setView(pinMarkers[i].getLatLng(), Math.max(lmap.getZoom(), 15));
+    pinMarkers[i].openPopup();
+  }
+  function renderMapSvg() {
+    var c = chain();
+    var W = 600, H = 340, P = 34;
+    if (!c.length) { $('map').innerHTML = ''; return; }
+    var lat0 = c.reduce(function (s, p) { return s + p.lat; }, 0) / c.length;
+    var kx = Math.cos(lat0 * Math.PI / 180);
+    var xy = c.map(function (p) { return { x: p.lon * kx, y: -p.lat }; });
+    var minX = Math.min.apply(null, xy.map(function (p) { return p.x; }));
+    var maxX = Math.max.apply(null, xy.map(function (p) { return p.x; }));
+    var minY = Math.min.apply(null, xy.map(function (p) { return p.y; }));
+    var maxY = Math.max.apply(null, xy.map(function (p) { return p.y; }));
+    var rx = maxX - minX, ry = maxY - minY;
+    var sc = 1;
+    if (rx > 0 || ry > 0) sc = Math.min(rx > 0 ? (W - 2 * P) / rx : Infinity, ry > 0 ? (H - 2 * P) / ry : Infinity);
+    var ox = (W - rx * sc) / 2, oy = (H - ry * sc) / 2;
+    var pos = xy.map(function (p) { return { x: ox + (p.x - minX) * sc, y: oy + (p.y - minY) * sc }; });
+    var d = pos.map(function (p, i) { return (i ? 'L' : 'M') + p.x.toFixed(1) + ' ' + p.y.toFixed(1); }).join(' ');
+    var hasStart = !!state.start;
+    var drawCount = state.loop && c.length > 1 ? c.length - 1 : c.length;
+    var pins = '';
+    for (var i = 0; i < drawCount; i++) {
+      var p = pos[i], isStart = hasStart && i === 0;
+      var label = isStart ? '出' : String(hasStart ? i : i + 1);
+      if (isStart) {
+        pins += '<rect x="' + (p.x - 11).toFixed(1) + '" y="' + (p.y - 11).toFixed(1) + '" width="22" height="22" rx="5" fill="var(--start)" stroke="var(--surface)" stroke-width="2"/>';
+      } else {
+        pins += '<circle cx="' + p.x.toFixed(1) + '" cy="' + p.y.toFixed(1) + '" r="11" fill="var(--accent)" stroke="var(--surface)" stroke-width="2"/>';
+      }
+      pins += '<text x="' + p.x.toFixed(1) + '" y="' + (p.y + 4).toFixed(1) + '" text-anchor="middle" font-size="12" font-weight="700" fill="' + (isStart ? '#fff' : 'var(--accent-ink)') + '">' + label + '</text>';
+    }
+    $('map').innerHTML = '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="訪問順の位置関係図">' +
+      '<path d="' + d + '" fill="none" stroke="var(--accent)" stroke-width="2" stroke-dasharray="6 5" stroke-linejoin="round" opacity=".7"/>' +
+      pins + '</svg>';
+  }
+
+  /* ---------- iPhoneではGoogleマップのアプリを直接開く ---------- */
+  var isIOS = /iP(hone|ad|od)/.test(navigator.userAgent) ||
+    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  document.addEventListener('click', function (e) {
+    var a = e.target && e.target.closest ? e.target.closest('a[data-app]') : null;
+    if (!a || !isIOS) return;
+    e.preventDefault();
+    window.location.href = a.getAttribute('data-app');
+  }, true);
+
+  /* ---------- ボタン ---------- */
+  $('go').addEventListener('click', build);
+  $('sample').addEventListener('click', function () {
+    $('start').value = '東京都千代田区丸の内1-9-1';
+    $('addrs').value = [
+      '東京都港区芝公園4-2-8',
+      '東京都台東区浅草2-3-1',
+      '東京都新宿区西新宿2-8-1',
+      '東京都渋谷区道玄坂2-1-1',
+      '東京都墨田区押上1-1-2',
+      '東京都文京区後楽1-3-61',
+      '東京都千代田区千代田1-1'
+    ].join('\n');
+    store.set('rm_start', $('start').value); store.set('rm_addrs', $('addrs').value);
+    geoStart = null; updateCount();
+    setStatus('公共施設の住所を入れました。「ルートを作る」を押してください。');
+  });
+  $('loc').addEventListener('click', function () {
+    if (!navigator.geolocation) { setStatus('この端末では現在地を取得できません。', 'warn'); return; }
+    setStatus('現在地を取得中…');
+    navigator.geolocation.getCurrentPosition(function (pos) {
+      geoStart = { lat: pos.coords.latitude, lon: pos.coords.longitude };
+      $('start').value = '現在地';
+      store.set('rm_start', '現在地');
+      setStatus('現在地を出発地にしました。');
+    }, function () {
+      setStatus('現在地を取得できませんでした。位置情報の許可を確認するか、住所を入力してください。', 'warn');
+    }, { enableHighAccuracy: true, timeout: 10000 });
+  });
+  $('copy').addEventListener('click', function () {
+    var text = state.ordered.map(function (p, i) { return (i + 1) + '. ' + p.input + (p.note ? '（' + p.note + '）' : ''); }).join('\n');
+    function done(ok) {
+      $('copied').textContent = ok ? 'コピーしました' : 'コピーできませんでした';
+      setTimeout(function () { $('copied').textContent = ''; }, 2500);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () { done(true); }, function () { fallbackCopy(text, done); });
+    } else { fallbackCopy(text, done); }
+  });
+  function fallbackCopy(text, done) {
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    var ok = false;
+    try { ok = document.execCommand('copy'); } catch (e) {}
+    document.body.removeChild(ta); done(ok);
+  }
+})();
+</script>
+</body>
+</html>
